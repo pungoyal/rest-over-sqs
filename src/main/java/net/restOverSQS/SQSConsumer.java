@@ -1,7 +1,12 @@
-package net.sqsConsumer;
+package net.restOverSQS;
+
+import java.io.IOException;
 
 public class SQSConsumer {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+//        AKIAJGLBPAX2S3JJUIMQ
+//        lPHRDlqLqS7EyQvPealWQ27t9lNmSyxH6sQA8snB
+
         if (args.length == 0) {
             QueueConsumer consumer = new QueueConsumer("https://sqs.us-east-1.amazonaws.com/302497724868/puneet-test");
             consumer.receive();
@@ -21,5 +26,4 @@ public class SQSConsumer {
         System.out.println("\t java -jar rest-over-sqs.jar https://sqs.us-east-1.amazonaws.com/302497724868/puneet-test");
         System.out.println("********************************************************************************");
     }
-
 }
