@@ -21,20 +21,7 @@ public class QueueConsumer {
         List<Message> messages = sqsClient.receiveMessages(queueUrl);
 
         for (Message message : messages) {
-            String receiptHandle = message.getReceiptHandle();
-
-            System.out.println("  Message");
-            System.out.println("    MessageId:     " + message.getMessageId());
-            System.out.println("    ReceiptHandle: " + receiptHandle);
-            System.out.println("    MD5OfBody:     " + message.getMD5OfBody());
-            System.out.println("    Body:          " + message.getBody());
-            for (Map.Entry<String, String> entry : message.getAttributes().entrySet()) {
-                System.out.println("  Attribute");
-                System.out.println("    Name:  " + entry.getKey());
-                System.out.println("    Value: " + entry.getValue());
-            }
-
-            sqsClient.deleteMessage(queueUrl, receiptHandle);
+            processAndDelete(message, queueUrl);
         }
     }
 
@@ -52,5 +39,22 @@ public class QueueConsumer {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void processAndDelete(Message message, String queueUrl) {
+        String receiptHandle = message.getReceiptHandle();
+
+        System.out.println("  Message");
+        System.out.println("    MessageId:     " + message.getMessageId());
+        System.out.println("    ReceiptHandle: " + receiptHandle);
+        System.out.println("    MD5OfBody:     " + message.getMD5OfBody());
+        System.out.println("    Body:          " + message.getBody());
+        for (Map.Entry<String, String> entry : message.getAttributes().entrySet()) {
+            System.out.println("  Attribute");
+            System.out.println("    Name:  " + entry.getKey());
+            System.out.println("    Value: " + entry.getValue());
+        }
+
+        sqsClient.deleteMessage(queueUrl, receiptHandle);
     }
 }

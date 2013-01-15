@@ -1,4 +1,4 @@
 target
-aws-credentials.properties
+AwsCredentials.properties
 *.iml
 .idea/

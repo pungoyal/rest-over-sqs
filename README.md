@@ -2,6 +2,15 @@
 
 rest-over-sqs intends to provide asynchronous integration using sqs for disparate applications 
 
+## Setup
+
+put your production aws keys in AwsCredentials.properties under src/main/resources/ and test aws keys under src/test/resources/
+
+```java
+accessKey=access key
+secretKey=secret key
+```
+
 ## Building
 
 ### Compiling & running tests

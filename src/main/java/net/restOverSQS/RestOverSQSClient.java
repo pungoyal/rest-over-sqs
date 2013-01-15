@@ -1,6 +1,6 @@
 package net.restOverSQS;
 
-import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.*;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RestOverSQSClient extends AmazonSQSClient {
     public RestOverSQSClient() throws IOException {
-        super(new PropertiesCredentials(RestOverSQSClient.class.getResourceAsStream("aws-credentials.properties")));
+        super(new ClasspathPropertiesFileCredentialsProvider().getCredentials());
     }
 
     public String queueUrlFor(String queueName) {
