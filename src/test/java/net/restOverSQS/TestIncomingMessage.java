@@ -2,10 +2,10 @@ package net.restOverSQS;
 
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
-import net.restOverSQS.domain.RestOverSQSMessage;
+import net.restOverSQS.domain.IncomingMessage;
 
-public class TestRestOverSQSMessage extends RestOverSQSMessage {
-    public TestRestOverSQSMessage() throws JSONException {
+public class TestIncomingMessage extends IncomingMessage {
+    public TestIncomingMessage() throws JSONException {
         setVerb("get");
         setUri("http://www.google.com/");
         setResponseTopicName("rest-over-sqs-response-test");

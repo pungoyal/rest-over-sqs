@@ -3,11 +3,11 @@ package net.restOverSQS.domain;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
-import net.restOverSQS.RestOverSQSClient;
+import net.restOverSQS.SQSClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RestOverSQSMessage {
+public class IncomingMessage {
     private String verb;
     private String uri;
     private JSONObject params;
@@ -16,10 +16,11 @@ public class RestOverSQSMessage {
     private String receiptHandle;
     private String rawBody;
 
-    private final static Logger logger = LoggerFactory.getLogger(RestOverSQSMessage.class);
+    private final static Logger logger = LoggerFactory.getLogger(IncomingMessage.class);
     private String responseTopicName;
+    private String responseString;
 
-    public RestOverSQSMessage parseFrom(Message message) {
+    public IncomingMessage parseFrom(Message message) {
         this.messageId = message.getMessageId();
         this.receiptHandle = message.getReceiptHandle();
         this.rawBody = message.getBody();
@@ -41,7 +42,7 @@ public class RestOverSQSMessage {
         return this;
     }
 
-    public void processAndDelete(RestOverSQSClient sqsClient, String queueUrl) {
+    public void processAndDelete(SQSClient sqsClient, String queueUrl) {
         logger.debug("  Processing message");
         logger.debug("    MessageId:       " + getMessageId());
         logger.debug("    Body:            " + getRawBody());
@@ -50,6 +51,9 @@ public class RestOverSQSMessage {
         logger.debug("    Response Topic:  " + getResponseTopicName());
         logger.debug("    params:          " + getParams());
 
+        setResponseString("successfully done!");
+
+        new OutgoingMessage().parseFrom(this).publish();
         sqsClient.deleteMessage(queueUrl, getReceiptHandle());
     }
 
@@ -106,5 +110,13 @@ public class RestOverSQSMessage {
 
     public void setResponseTopicName(String responseTopicName) {
         this.responseTopicName = responseTopicName;
+    }
+
+    public String getResponseString() {
+        return responseString;
+    }
+
+    public void setResponseString(String responseString) {
+        this.responseString = responseString;
     }
 }

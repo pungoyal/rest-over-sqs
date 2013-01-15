@@ -1,6 +1,6 @@
 package net.restOverSQS;
 
-import net.restOverSQS.domain.RestOverSQSMessage;
+import net.restOverSQS.domain.IncomingMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,21 +9,21 @@ import java.util.List;
 
 public class QueueConsumer {
     private final String queueName;
-    private final RestOverSQSClient sqsClient;
+    private final SQSClient sqsClient;
     private int pollCounter;
 
     private final static Logger logger = LoggerFactory.getLogger(QueueConsumer.class);
 
-    public QueueConsumer(RestOverSQSClient sqsClient, String queueName) throws IOException {
+    public QueueConsumer(SQSClient sqsClient, String queueName) throws IOException {
         this.sqsClient = sqsClient;
         this.queueName = queueName;
         this.pollCounter = 0;
     }
 
     public void receive(String queueUrl) {
-        List<RestOverSQSMessage> messages = sqsClient.receiveMessages(queueUrl);
+        List<IncomingMessage> messages = sqsClient.receiveMessages(queueUrl);
 
-        for (RestOverSQSMessage message : messages) {
+        for (IncomingMessage message : messages) {
             message.processAndDelete(sqsClient, queueUrl);
         }
     }

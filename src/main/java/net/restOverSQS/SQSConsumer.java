@@ -15,7 +15,7 @@ public class SQSConsumer {
         }
 
         String queueName = args[0];
-        RestOverSQSClient sqsClient = new RestOverSQSClient();
+        SQSClient sqsClient = new SQSClient();
         QueueConsumer consumer = new QueueConsumer(sqsClient, queueName);
 
         int pollingInterval = 60;

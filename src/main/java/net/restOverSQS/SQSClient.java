@@ -4,14 +4,13 @@ import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.*;
 import com.amazonaws.util.json.JSONException;
-import net.restOverSQS.domain.RestOverSQSMessage;
+import net.restOverSQS.domain.IncomingMessage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestOverSQSClient extends AmazonSQSClient {
-    public RestOverSQSClient() throws IOException {
+public class SQSClient extends AmazonSQSClient {
+    public SQSClient() {
         super(new ClasspathPropertiesFileCredentialsProvider().getCredentials());
     }
 
@@ -19,16 +18,16 @@ public class RestOverSQSClient extends AmazonSQSClient {
         return getQueueUrl(new GetQueueUrlRequest().withQueueName(queueName)).getQueueUrl();
     }
 
-    public String sendMessage(String queueUrl, RestOverSQSMessage message) throws JSONException {
+    public String sendMessage(String queueUrl, IncomingMessage message) throws JSONException {
         SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(queueUrl).withMessageBody(message.toJson());
         return sendMessage(sendMessageRequest).getMessageId();
     }
 
-    public List<RestOverSQSMessage> receiveMessages(String queueUrl) {
-        List<RestOverSQSMessage> result = new ArrayList<RestOverSQSMessage>();
+    public List<IncomingMessage> receiveMessages(String queueUrl) {
+        List<IncomingMessage> result = new ArrayList<IncomingMessage>();
 
         for (Message message : getAllMessages(queueUrl)) {
-            result.add(new RestOverSQSMessage().parseFrom(message));
+            result.add(new IncomingMessage().parseFrom(message));
         }
 
         return result;

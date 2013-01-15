@@ -10,14 +10,14 @@ import java.io.IOException;
 
 public class QueueConsumerTest {
     private String queueUrl;
-    private RestOverSQSClient sqsClient;
+    private SQSClient sqsClient;
 
     @Before
     public void setUp() throws IOException, JSONException {
-        sqsClient = new RestOverSQSClient();
+        sqsClient = new SQSClient();
         queueUrl = sqsClient.queueUrlFor("rest-over-sqs-test");
 
-        sqsClient.sendMessage(queueUrl, new TestRestOverSQSMessage());
+        sqsClient.sendMessage(queueUrl, new TestIncomingMessage());
     }
 
     @Test

@@ -5,24 +5,24 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class RestOverSQSMessageTest {
-    private RestOverSQSMessage restOverSQSMessage;
+public class IncomingMessageTest {
+    private IncomingMessage incomingMessage;
 
     @Before
     public void setUp() throws Exception {
-        restOverSQSMessage = new RestOverSQSMessage();
+        incomingMessage = new IncomingMessage();
     }
 
     @Test
     public void testToJson() throws Exception {
-        restOverSQSMessage.setVerb("post");
-        restOverSQSMessage.setUri("http://www.google.com");
-        restOverSQSMessage.setResponseTopicName("rest-over-sqs-response");
+        incomingMessage.setVerb("post");
+        incomingMessage.setUri("http://www.google.com");
+        incomingMessage.setResponseTopicName("rest-over-sqs-response");
         JSONObject params = new JSONObject();
         params.put("q", "amazon simple queue service");
-        restOverSQSMessage.setParams(params);
+        incomingMessage.setParams(params);
 
-        String jsonString = restOverSQSMessage.toJson();
+        String jsonString = incomingMessage.toJson();
 
         JSONObject json = new JSONObject(jsonString);
         Assert.assertEquals("post", json.get("verb"));
