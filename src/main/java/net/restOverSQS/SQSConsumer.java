@@ -1,8 +1,13 @@
 package net.restOverSQS;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 public class SQSConsumer {
+    private final static Logger logger = LoggerFactory.getLogger(SQSConsumer.class);
+
     public static void main(String[] args) throws IOException {
         if (args.length < 1 || args.length > 2) {
             printUsage();

@@ -1,23 +1,23 @@
 package net.restOverSQS;
 
+import com.amazonaws.util.json.JSONException;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Date;
 
 public class QueueConsumerTest {
     private String queueUrl;
     private RestOverSQSClient sqsClient;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, JSONException {
         sqsClient = new RestOverSQSClient();
         queueUrl = sqsClient.queueUrlFor("rest-over-sqs-test");
 
-        sqsClient.sendMessage(queueUrl, String.format("message from test - %s", new Date()));
+        sqsClient.sendMessage(queueUrl, new TestRestOverSQSMessage());
     }
 
     @Test

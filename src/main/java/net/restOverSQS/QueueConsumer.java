@@ -1,15 +1,18 @@
 package net.restOverSQS;
 
-import com.amazonaws.services.sqs.model.Message;
+import net.restOverSQS.domain.RestOverSQSMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 public class QueueConsumer {
     private final String queueName;
     private final RestOverSQSClient sqsClient;
     private int pollCounter;
+
+    private final static Logger logger = LoggerFactory.getLogger(QueueConsumer.class);
 
     public QueueConsumer(RestOverSQSClient sqsClient, String queueName) throws IOException {
         this.sqsClient = sqsClient;
@@ -18,19 +21,19 @@ public class QueueConsumer {
     }
 
     public void receive(String queueUrl) {
-        List<Message> messages = sqsClient.receiveMessages(queueUrl);
+        List<RestOverSQSMessage> messages = sqsClient.receiveMessages(queueUrl);
 
-        for (Message message : messages) {
-            processAndDelete(message, queueUrl);
+        for (RestOverSQSMessage message : messages) {
+            message.processAndDelete(sqsClient, queueUrl);
         }
     }
 
     public void startListening(int pollingInterval) {
         String queueUrl = sqsClient.queueUrlFor(queueName);
-        System.out.println(String.format("starting to listen to: %s, polling interval: %s", queueUrl, pollingInterval));
+        logger.debug(String.format("starting to listen to: %s, polling interval: %s", queueUrl, pollingInterval));
 
         while (true) {
-            System.out.println(String.format("poll counter: %s...", pollCounter));
+            logger.debug(String.format("poll counter: %s...", pollCounter));
             receive(queueUrl);
             pollCounter += 1;
             try {
@@ -39,22 +42,5 @@ public class QueueConsumer {
                 e.printStackTrace();
             }
         }
-    }
-
-    private void processAndDelete(Message message, String queueUrl) {
-        String receiptHandle = message.getReceiptHandle();
-
-        System.out.println("  Message");
-        System.out.println("    MessageId:     " + message.getMessageId());
-        System.out.println("    ReceiptHandle: " + receiptHandle);
-        System.out.println("    MD5OfBody:     " + message.getMD5OfBody());
-        System.out.println("    Body:          " + message.getBody());
-        for (Map.Entry<String, String> entry : message.getAttributes().entrySet()) {
-            System.out.println("  Attribute");
-            System.out.println("    Name:  " + entry.getKey());
-            System.out.println("    Value: " + entry.getValue());
-        }
-
-        sqsClient.deleteMessage(queueUrl, receiptHandle);
     }
 }
