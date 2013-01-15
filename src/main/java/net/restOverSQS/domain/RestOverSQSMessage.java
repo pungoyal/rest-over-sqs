@@ -17,6 +17,7 @@ public class RestOverSQSMessage {
     private String rawBody;
 
     private final static Logger logger = LoggerFactory.getLogger(RestOverSQSMessage.class);
+    private String responseTopicName;
 
     public RestOverSQSMessage parseFrom(Message message) {
         this.messageId = message.getMessageId();
@@ -31,6 +32,8 @@ public class RestOverSQSMessage {
 
             this.verb = (String) jsonObject.get("verb");
             this.uri = (String) jsonObject.get("uri");
+            this.responseTopicName = (String) jsonObject.get("response-queue-name");
+
             this.params = (JSONObject) jsonObject.get("params");
         } catch (JSONException e) {
             logger.debug(String.format("could not parse: %s", jsonMessageBody));
@@ -55,6 +58,7 @@ public class RestOverSQSMessage {
         jsonObject.put("verb", getVerb());
         jsonObject.put("uri", getUri());
         jsonObject.put("params", getParams());
+        jsonObject.put("response-queue-name", getResponseTopicName());
 
         return jsonObject.toString();
     }
@@ -83,6 +87,10 @@ public class RestOverSQSMessage {
         return rawBody;
     }
 
+    public String getResponseTopicName() {
+        return responseTopicName;
+    }
+
     protected void setVerb(String verb) {
         this.verb = verb;
     }
@@ -93,5 +101,9 @@ public class RestOverSQSMessage {
 
     protected void setParams(JSONObject params) {
         this.params = params;
+    }
+
+    public void setResponseTopicName(String responseTopicName) {
+        this.responseTopicName = responseTopicName;
     }
 }

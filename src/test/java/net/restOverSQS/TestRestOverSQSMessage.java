@@ -8,6 +8,7 @@ public class TestRestOverSQSMessage extends RestOverSQSMessage {
     public TestRestOverSQSMessage() throws JSONException {
         setVerb("get");
         setUri("http://www.google.com/");
+        setResponseTopicName("rest-over-sqs-response-test");
 
         JSONObject params = new JSONObject();
         params.put("q", "amazon simple queue service");
