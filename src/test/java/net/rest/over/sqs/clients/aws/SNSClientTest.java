@@ -1,5 +1,6 @@
-package net.rest.over.sqs.aws.clients;
+package net.rest.over.sqs.clients.aws;
 
+import net.rest.over.sqs.clients.aws.SNSClient;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

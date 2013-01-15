@@ -3,7 +3,9 @@ package net.rest.over.sqs.domain;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
-import net.rest.over.sqs.aws.clients.SQSClient;
+import net.rest.over.sqs.clients.ServicesClient;
+import net.rest.over.sqs.clients.aws.SQSClient;
+import org.jboss.resteasy.client.ClientResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,15 +45,33 @@ public class IncomingMessage {
     }
 
     public void processAndDelete(SQSClient sqsClient, String queueUrl) {
-        logger.debug("  Processing message");
-        logger.debug("    MessageId:       " + getMessageId());
-        logger.debug("    Body:            " + getRawBody());
-        logger.debug("    Verb:            " + getVerb());
-        logger.debug("    URI:             " + getUri());
-        logger.debug("    Response Topic:  " + getResponseTopicName());
-        logger.debug("    params:          " + getParams());
+        ServicesClient client = new ServicesClient();
 
-        setResponseString("successfully done!");
+        try {
+            long start = System.currentTimeMillis();
+
+            logger.debug("handling {} for {}", verb, uri);
+            logger.debug("with params {} ", params);
+
+            ClientResponse response;
+            if (verb.equalsIgnoreCase("get")) {
+                response = client.get(uri, params);
+            } else {
+                response = client.post(uri, params);
+            }
+            logger.debug("took {} ms", (System.currentTimeMillis() - start));
+
+            if (response == null) {
+                responseString = "response was null";
+                logger.error(responseString);
+            } else {
+                responseString = response.getEntity().toString();
+                logger.debug("Success: " + responseString);
+            }
+        } catch (Throwable e) {
+            responseString = "Exception occurred " + e.getMessage();
+            logger.error("Exception occurred ", e.getMessage());
+        }
 
         new OutgoingMessage().parseFrom(this).publish();
         sqsClient.deleteMessage(queueUrl, getReceiptHandle());

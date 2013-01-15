@@ -1,4 +1,4 @@
-package net.rest.over.sqs.aws.clients;
+package net.rest.over.sqs.clients.aws;
 
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
 import com.amazonaws.services.sns.AmazonSNSClient;

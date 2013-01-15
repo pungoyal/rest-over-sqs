@@ -2,7 +2,7 @@ package net.rest.over.sqs.domain;
 
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
-import net.rest.over.sqs.aws.clients.SNSClient;
+import net.rest.over.sqs.clients.aws.SNSClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

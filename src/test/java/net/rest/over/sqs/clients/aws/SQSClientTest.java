@@ -1,4 +1,4 @@
-package net.rest.over.sqs.aws.clients;
+package net.rest.over.sqs.clients.aws;
 
 import junit.framework.Assert;
 import net.rest.over.sqs.domain.IncomingMessage;

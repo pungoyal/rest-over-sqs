@@ -2,7 +2,7 @@ package net.rest.over.sqs;
 
 import com.amazonaws.util.json.JSONException;
 import junit.framework.Assert;
-import net.rest.over.sqs.aws.clients.SQSClient;
+import net.rest.over.sqs.clients.aws.SQSClient;
 import net.rest.over.sqs.domain.stubs.TestIncomingMessage;
 import org.junit.After;
 import org.junit.Before;

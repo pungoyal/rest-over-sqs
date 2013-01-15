@@ -2,7 +2,6 @@ package net.rest.over.sqs.domain;
 
 import com.amazonaws.util.json.JSONObject;
 import junit.framework.Assert;
-import net.rest.over.sqs.domain.IncomingMessage;
 import org.junit.Before;
 import org.junit.Test;
 

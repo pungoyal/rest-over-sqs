@@ -1,6 +1,6 @@
 package net.rest.over.sqs;
 
-import net.rest.over.sqs.aws.clients.SQSClient;
+import net.rest.over.sqs.clients.aws.SQSClient;
 
 import java.io.IOException;
 
