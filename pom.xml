@@ -41,7 +41,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>net.sqsConsumer.SQSConsumer</mainClass>
+                            <mainClass>net.restOverSQS.SQSConsumer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
