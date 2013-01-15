@@ -43,13 +43,14 @@ public class RestOverSQSMessage {
 
     public void processAndDelete(RestOverSQSClient sqsClient, String queueUrl) {
         logger.debug("  Processing message");
-        logger.debug("    MessageId:  " + getMessageId());
-        logger.debug("    Body:       " + getRawBody());
-        logger.debug("    Verb:       " + getVerb());
-        logger.debug("    URI:        " + getUri());
-        logger.debug("    params:     " + getParams());
+        logger.debug("    MessageId:       " + getMessageId());
+        logger.debug("    Body:            " + getRawBody());
+        logger.debug("    Verb:            " + getVerb());
+        logger.debug("    URI:             " + getUri());
+        logger.debug("    Response Topic:  " + getResponseTopicName());
+        logger.debug("    params:          " + getParams());
 
-        sqsClient.deleteMessage(queueUrl, receiptHandle);
+        sqsClient.deleteMessage(queueUrl, getReceiptHandle());
     }
 
     public String toJson() throws JSONException {
