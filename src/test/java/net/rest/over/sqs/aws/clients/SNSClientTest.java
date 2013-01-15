@@ -1,4 +1,4 @@
-package net.restOverSQS;
+package net.rest.over.sqs.aws.clients;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,7 +10,7 @@ public class SNSClientTest {
 
     @Before
     public void setUp() throws Exception {
-        snsClient = SNSClient.INSTANCE;
+        snsClient = SNSClient.getInstance();
         topicDisplayName = "rest-over-sqs-response-test";
     }
 

@@ -1,6 +1,7 @@
-package net.restOverSQS;
+package net.rest.over.sqs;
 
-import net.restOverSQS.domain.IncomingMessage;
+import net.rest.over.sqs.aws.clients.SQSClient;
+import net.rest.over.sqs.domain.IncomingMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

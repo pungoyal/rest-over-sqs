@@ -1,13 +1,10 @@
-package net.restOverSQS;
+package net.rest.over.sqs;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.rest.over.sqs.aws.clients.SQSClient;
 
 import java.io.IOException;
 
 public class SQSConsumer {
-    private final static Logger logger = LoggerFactory.getLogger(SQSConsumer.class);
-
     public static void main(String[] args) throws IOException {
         if (args.length < 1 || args.length > 2) {
             printUsage();
@@ -15,7 +12,7 @@ public class SQSConsumer {
         }
 
         String queueName = args[0];
-        SQSClient sqsClient = new SQSClient();
+        SQSClient sqsClient = SQSClient.getInstance();
         QueueConsumer consumer = new QueueConsumer(sqsClient, queueName);
 
         int pollingInterval = 60;

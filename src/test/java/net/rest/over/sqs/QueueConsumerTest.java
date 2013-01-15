@@ -1,7 +1,9 @@
-package net.restOverSQS;
+package net.rest.over.sqs;
 
 import com.amazonaws.util.json.JSONException;
 import junit.framework.Assert;
+import net.rest.over.sqs.aws.clients.SQSClient;
+import net.rest.over.sqs.domain.stubs.TestIncomingMessage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +16,7 @@ public class QueueConsumerTest {
 
     @Before
     public void setUp() throws IOException, JSONException {
-        sqsClient = new SQSClient();
+        sqsClient = SQSClient.getInstance();
         queueUrl = sqsClient.queueUrlFor("rest-over-sqs-test");
 
         sqsClient.sendMessage(queueUrl, new TestIncomingMessage());

@@ -1,8 +1,8 @@
-package net.restOverSQS.domain;
+package net.rest.over.sqs.domain;
 
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
-import net.restOverSQS.SNSClient;
+import net.rest.over.sqs.aws.clients.SNSClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +23,7 @@ public class OutgoingMessage {
     }
 
     public String publish() {
-        return SNSClient.INSTANCE.publish(getTopicName(), toJson());
+        return SNSClient.getInstance().publish(getTopicName(), toJson());
     }
 
     public String toJson() {
@@ -40,7 +40,6 @@ public class OutgoingMessage {
 
         return jsonObject.toString();
     }
-
 
     public String getTopicName() {
         return topicName;

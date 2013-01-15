@@ -1,8 +1,8 @@
-package net.restOverSQS.domain;
+package net.rest.over.sqs.domain;
 
 import junit.framework.Assert;
-import net.restOverSQS.SQSClient;
-import net.restOverSQS.TestIncomingMessage;
+import net.rest.over.sqs.aws.clients.SQSClient;
+import net.rest.over.sqs.domain.stubs.TestIncomingMessage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class OutgoingMessageTest {
     public void setUp() throws Exception {
         message = new OutgoingMessage();
 
-        sqsClient = new SQSClient();
+        sqsClient = SQSClient.getInstance();
         queueUrl = sqsClient.queueUrlFor("rest-over-sqs-response-test");
         sqsClient.clearQueue(queueUrl);
     }

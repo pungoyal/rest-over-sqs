@@ -1,9 +1,9 @@
-package net.restOverSQS.domain;
+package net.rest.over.sqs.domain;
 
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
-import net.restOverSQS.SQSClient;
+import net.rest.over.sqs.aws.clients.SQSClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

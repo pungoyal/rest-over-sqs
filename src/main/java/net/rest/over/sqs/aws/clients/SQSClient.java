@@ -1,16 +1,25 @@
-package net.restOverSQS;
+package net.rest.over.sqs.aws.clients;
 
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.*;
 import com.amazonaws.util.json.JSONException;
-import net.restOverSQS.domain.IncomingMessage;
+import net.rest.over.sqs.domain.IncomingMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SQSClient extends AmazonSQSClient {
-    public SQSClient() {
+    private static SQSClient instance = null;
+
+    public static SQSClient getInstance() {
+        if (instance == null)
+            instance = new SQSClient();
+
+        return instance;
+    }
+
+    private SQSClient() {
         super(new ClasspathPropertiesFileCredentialsProvider().getCredentials());
     }
 

@@ -1,8 +1,8 @@
-package net.restOverSQS;
+package net.rest.over.sqs.domain.stubs;
 
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
-import net.restOverSQS.domain.IncomingMessage;
+import net.rest.over.sqs.domain.IncomingMessage;
 
 public class TestIncomingMessage extends IncomingMessage {
     public TestIncomingMessage() throws JSONException {

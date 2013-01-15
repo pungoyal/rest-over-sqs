@@ -1,4 +1,4 @@
-package net.restOverSQS;
+package net.rest.over.sqs.aws.clients;
 
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
 import com.amazonaws.services.sns.AmazonSNSClient;
@@ -8,7 +8,14 @@ import com.amazonaws.services.sns.model.Topic;
 import java.util.List;
 
 public class SNSClient extends AmazonSNSClient {
-    public static final SNSClient INSTANCE = new SNSClient();
+    private static SNSClient instance = null;
+
+    public static SNSClient getInstance() {
+        if (instance == null)
+            instance = new SNSClient();
+
+        return instance;
+    }
 
     private SNSClient() {
         super(new ClasspathPropertiesFileCredentialsProvider().getCredentials());
