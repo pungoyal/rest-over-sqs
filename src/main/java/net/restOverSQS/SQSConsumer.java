@@ -4,9 +4,6 @@ import java.io.IOException;
 
 public class SQSConsumer {
     public static void main(String[] args) throws IOException {
-        // args[0] : queue name
-        // args[1] : polling interval, -1 for no polling
-
         if (args.length < 1 || args.length > 2) {
             printUsage();
             System.exit(0);
