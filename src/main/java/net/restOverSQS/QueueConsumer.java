@@ -28,16 +28,16 @@ public class QueueConsumer {
         }
     }
 
-    public void startListening(int pollingInterval) {
+    public void startListening(int pollingIntervalInSeconds) {
         String queueUrl = sqsClient.queueUrlFor(queueName);
-        logger.debug(String.format("starting to listen to: %s, polling interval: %s", queueUrl, pollingInterval));
+        logger.debug(String.format("starting to listen to: %s, polling interval: %s", queueUrl, pollingIntervalInSeconds));
 
         while (true) {
             logger.debug(String.format("poll counter: %s...", pollCounter));
             receive(queueUrl);
             pollCounter += 1;
             try {
-                Thread.sleep(pollingInterval);
+                Thread.sleep(pollingIntervalInSeconds * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
